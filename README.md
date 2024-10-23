@@ -123,6 +123,11 @@ La base de datos estará diseñada en **SQL Server** y constará de las siguient
 
 Esto asegura la seguridad, integridad y disponibilidad del sistema de pagos.
 
+## 7. Diagrama Entidad-Relación
+
+![Modelado de Datos de la Solución](/Entity-Relation.svg)
+Esto lo modelé usando dbdiagram.io :)
+
 ## Resumen
 
 Esta solución maneja eficientemente el proceso masivo de pagos mediante una arquitectura de microservicios, integrando componentes que aseguran el procesamiento rápido y confiable de hasta un millón de transacciones. La base de datos está optimizada para soportar alta concurrencia y volumen, mientras que las herramientas de monitoreo y reportes garantizan la visibilidad completa del proceso.
