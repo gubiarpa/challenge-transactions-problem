@@ -2,8 +2,8 @@
 
 A continuación, se presentan los casos de uso de la solución, con detalles específicos sobre su diseño, estrategias y herramientas utilizadas.
 
-- [Caso 1](https://github.com/gubiarpa/challenge-transactions-problem/tree/master?tab=readme-ov-file#caso-1): Solución para la transacción de desembolsos con procesos online y batch
-- [Caso 2](https://github.com/gubiarpa/challenge-transactions-problem/tree/master?tab=readme-ov-file#caso-2): Solución para el proceso masivo de pagos automático
+- [Caso 1](#caso-1): Solución para la transacción de desembolsos con procesos online y batch
+- [Caso 2](#caso-2): Solución para el proceso masivo de pagos automático
 
 ## Caso 1
 
@@ -111,6 +111,17 @@ La base de datos estará diseñada en **SQL Server** y constará de las siguient
   - Reporte de **Descuentos**: Detallando los pagos que recibieron descuentos y las variables que aplicaron.
 
   Los reportes se generarán automáticamente al final de cada proceso masivo y se almacenarán en formato **CSV** o **Excel** para ser consultados posteriormente.
+
+## 6. Seguridad
+
+- **Autenticación y Autorización**: Uso de **Azure Active Directory (AAD)** con OAuth 2.0 para validar usuarios y servicios, garantizando acceso solo a roles autorizados.
+- **Cifrado**: Datos en tránsito cifrados con **TLS 1.2+**; datos en reposo mediante **Transparent Data Encryption (TDE)** y gestión de claves en **Azure Key Vault**.
+- **Gestión de Accesos**: Control de acceso basado en roles (**RBAC**) en servicios y base de datos, asegurando permisos mínimos necesarios.
+- **Protección DDoS**: Implementación de **Azure DDoS Protection** para defender los endpoints.
+- **Auditoría**: Registros detallados con **Azure Monitor** y **Application Insights** para trazabilidad y detección de anomalías.
+- **Backups**: Políticas de **backup** y recuperación para proteger los datos críticos.
+
+Esto asegura la seguridad, integridad y disponibilidad del sistema de pagos.
 
 ## Resumen
 
