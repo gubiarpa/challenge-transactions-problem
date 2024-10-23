@@ -1,6 +1,11 @@
 # Solución
 
-## Caso 1: Solución para la transacción de desembolsos con procesos online y batch
+A continuación, se presentan los casos de uso de la solución, con detalles específicos sobre su diseño, estrategias y herramientas utilizadas.
+
+- [Caso 1](##Caso-1): Solución para la transacción de desembolsos con procesos online y batch
+- [Caso 2](##Caso-2): Solución para el proceso masivo de pagos automático
+
+## Caso 1
 
 ### 1. Diseño de la Solución (Online y Batch)
 
@@ -52,3 +57,61 @@ Se utilizaría una arquitectura de **tres capas**:
 ### Resumen
 
 Esta solución distribuye las responsabilidades entre los procesos online y batch, asegurando estabilidad, escalabilidad y seguridad, mientras se soporta la alta concurrencia de decenas de miles de transacciones diarias.
+
+---
+
+## Caso 2: Solución para el proceso masivo de pagos automático
+
+## 1. Planteamiento de la Solución
+
+Para incorporar el proceso masivo de pagos de manera automática, se implementará un sistema basado en **microservicios** que procese eficientemente los pagos, aplique descuentos y gestione devoluciones. Este sistema estará optimizado para manejar un alto volumen de transacciones, especialmente durante los días pico (hasta 1 millón de pagos).
+
+## 2. Estrategia y Herramientas a Utilizar
+
+- **Microservicios en .NET 8**: Cada función (pagos, descuentos, devoluciones, reportes) será implementada como un microservicio independiente. Esto permitirá la escalabilidad y separación de responsabilidades.
+- **Azure Functions** o **Windows Services**: Para ejecutar el proceso masivo semanalmente (los viernes), automatizando la carga de datos y el procesamiento de pagos.
+- **Azure Service Bus** o **RabbitMQ**: Para la comunicación y gestión de mensajes entre los microservicios. Esto asegura que las transacciones sean procesadas de forma asíncrona y sin pérdidas de información.
+- **Redis Cache**: Para mejorar el rendimiento, almacenando temporalmente los cálculos intermedios y los resultados de pagos frecuentes.
+- **Azure Data Factory** o **SSIS**: Para la carga masiva de datos desde las diversas fuentes a la base de datos principal, optimizando el tiempo de procesamiento de las entradas.
+
+## 3. Diseño de la Base de Datos en SQL
+
+La base de datos estará diseñada en **SQL Server** y constará de las siguientes tablas clave:
+
+- **Pago**:
+  - `IdPago`, `Monto`, `IdEstado` (procesado, no procesado, devolución).
+- **EstadoPago**
+  - `IdPago`, `Estado` (procesado, no procesado, devolución).
+- **Descuento**:
+  - `IdPago`, `PorcentajeDescuento` (decimal), `ValorVariable` (con base en las 10 variables proporcionadas).
+- **Devolucion**:
+  - `IdDevolucion`, `IdPago`, `MontoExcedente`, `Fecha`.
+- **Historial**:
+
+  - Contendrá los datos históricos de pagos y variables, necesarios para el cálculo de descuentos, con datos de los últimos 5 años.
+
+  El diseño incluirá **índices** en las columnas más consultadas (`IdPago`, `IdEstado`, `Monto`) para optimizar las consultas y mejorar el rendimiento.
+  Se debe analizar a profundidad el uso de índices en las consultas, ya que el volumen de transacciones puede aumentar significativamente durante los días pico, y esto puede desencadenar un incremento en el tiempo de respuesta.
+
+## 4. Estrategias para Garantizar el Máximo Rendimiento de la Base de Datos
+
+- **Particionado de tablas**: Dado el alto volumen de transacciones, se implementará el particionado de las tablas de pagos y devoluciones, para mejorar la consulta y la carga de datos.
+- **Índices optimizados**: Crear **índices compuestos** en las columnas más consultadas, como `IdPago`, `Fecha`, y `Estado`, para mejorar la velocidad de las consultas, especialmente durante los días pico.
+- **Caché**: Utilizar **Redis Cache** para almacenar temporalmente datos frecuentes o resultados intermedios, reduciendo la carga sobre la base de datos.
+- **Ejecución por lotes (batch)**: El proceso de pagos se ejecutará en lotes pequeños dentro del proceso masivo, para evitar sobrecargar la base de datos.
+- **Transacciones distribuidas**: Asegurar la integridad de los pagos, descuentos y devoluciones utilizando **transacciones distribuidas**, garantizando que todas las operaciones se completen de manera exitosa o se reviertan si ocurre un fallo.
+
+## 5. Monitoreo y Reportes
+
+- **Azure Application Insights** y **SQL Server Profiler**: Para monitorear el rendimiento de los procesos y la base de datos en tiempo real.
+- **Generación de reportes**:
+
+  - Reporte de **Pagos Procesados**: Incluyendo los detalles de los pagos exitosos y fallidos.
+  - Reporte de **Devoluciones**: Que muestre los montos excedentes devueltos.
+  - Reporte de **Descuentos**: Detallando los pagos que recibieron descuentos y las variables que aplicaron.
+
+  Los reportes se generarán automáticamente al final de cada proceso masivo y se almacenarán en formato **CSV** o **Excel** para ser consultados posteriormente.
+
+## Resumen
+
+Esta solución maneja eficientemente el proceso masivo de pagos mediante una arquitectura de microservicios, integrando componentes que aseguran el procesamiento rápido y confiable de hasta un millón de transacciones. La base de datos está optimizada para soportar alta concurrencia y volumen, mientras que las herramientas de monitoreo y reportes garantizan la visibilidad completa del proceso.
