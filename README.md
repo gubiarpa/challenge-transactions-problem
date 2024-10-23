@@ -2,8 +2,8 @@
 
 A continuación, se presentan los casos de uso de la solución, con detalles específicos sobre su diseño, estrategias y herramientas utilizadas.
 
-- [Caso 1](##Caso-1): Solución para la transacción de desembolsos con procesos online y batch
-- [Caso 2](##Caso-2): Solución para el proceso masivo de pagos automático
+- [Caso 1](https://github.com/gubiarpa/challenge-transactions-problem/tree/master?tab=readme-ov-file#caso-1): Solución para la transacción de desembolsos con procesos online y batch
+- [Caso 2](https://github.com/gubiarpa/challenge-transactions-problem/tree/master?tab=readme-ov-file#caso-2): Solución para el proceso masivo de pagos automático
 
 ## Caso 1
 
@@ -60,7 +60,7 @@ Esta solución distribuye las responsabilidades entre los procesos online y batc
 
 ---
 
-## Caso 2: Solución para el proceso masivo de pagos automático
+## Caso 2
 
 ## 1. Planteamiento de la Solución
 
