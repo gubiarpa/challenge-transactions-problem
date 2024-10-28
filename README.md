@@ -65,6 +65,8 @@ Esta solución distribuye las responsabilidades entre los procesos online y batc
 ## 1. Planteamiento de la Solución
 
 Para incorporar el proceso masivo de pagos de manera automática, se implementará un sistema basado en **microservicios** que procese eficientemente los pagos, aplique descuentos y gestione devoluciones. Este sistema estará optimizado para manejar un alto volumen de transacciones, especialmente durante los días pico (hasta 1 millón de pagos).
+![Diagrama de la Solución](/Caso 1.svg)
+Esto lo modelé usando Excalidraw.io :)
 
 ## 2. Estrategia y Herramientas a Utilizar
 
