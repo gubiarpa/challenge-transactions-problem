@@ -13,6 +13,10 @@ A continuación, se presentan los casos de uso de la solución, con detalles esp
 - Para los procesos **batch**, emplearía servicios de procesamiento masivo, como **Azure Data Factory** o **Windows Services**, que permiten manejar grandes volúmenes de datos sin afectar el rendimiento de las operaciones online.
 - El proceso batch consolidará grandes volúmenes de transacciones y realizará cálculos en masa, mientras que el proceso online manejará solicitudes en tiempo real.
 
+
+![Diagrama de la Solución](/Caso-1.svg)
+Esto lo modelé usando Excalidraw.io :)
+
 ### 2. Multicanalidad y Seguridad
 
 - **Multicanalidad**: Usar una **API Gateway** para gestionar las solicitudes de diferentes canales como aplicaciones móviles, web y sistemas de terceros, brindando flexibilidad y control.
@@ -65,8 +69,6 @@ Esta solución distribuye las responsabilidades entre los procesos online y batc
 ## 1. Planteamiento de la Solución
 
 Para incorporar el proceso masivo de pagos de manera automática, se implementará un sistema basado en **microservicios** que procese eficientemente los pagos, aplique descuentos y gestione devoluciones. Este sistema estará optimizado para manejar un alto volumen de transacciones, especialmente durante los días pico (hasta 1 millón de pagos).
-![Diagrama de la Solución](/Caso 1.svg)
-Esto lo modelé usando Excalidraw.io :)
 
 ## 2. Estrategia y Herramientas a Utilizar
 
